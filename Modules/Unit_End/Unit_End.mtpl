@@ -1,0 +1,56 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan Unit_End;
+
+Test Unit_End UnitEndTest
+{
+	PartTesterIdSource = "xxx"; 
+	ThermalHeadIdSource = "xxx"; 
+	TiuIdSource = "xxx"; 
+	Timeout = "00:30:00";
+	#SubStructures = DCFResult.SubStructures;
+}
+
+Test RestartPythonConsole RestartPythonConsole
+{
+	TypeOfRestart = "PythonService";
+	Timeout = "00:30:00";
+}
+
+
+
+Flow Unit_End
+{
+	FlowItem UnitEndTest UnitEndTest 
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1;  }
+		Result 0
+		{
+			Property PassFail = "Fail";
+			Return 0;
+		}
+		Result 1
+		{
+			Property PassFail = "Pass";
+			GoTo RestartPythonConsole;
+		}
+	}
+	FlowItem RestartPythonConsole RestartPythonConsole
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1;  }
+		Result 0
+		{
+			Property PassFail = "Fail";
+			Return 0;
+		}
+		Result 1
+		{
+			Property PassFail = "Pass";
+			Return 1;
+		}
+	}
+}

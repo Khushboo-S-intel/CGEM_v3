@@ -1,0 +1,10 @@
+Version 1.0;
+TestPlan BASE;
+# Import "QDFMatrix.qdm.usrv";
+Import "UservarDefinitions.usrv";
+Import "Test_Operations.usrv";
+Import "Product_Features.usrv";
+Import "Test_Program_Content\\CMV-ARL8B32A-SSF.content";
+Import "Test_Program_Content\\CMV-ARL8B32A-SSF.sbdefs";
+Import "Test_Program_Content\\CMV-ARL8B32A-Search.content";
+Import "Test_Program_Content\\CMV-ARL8B32A-Search.sbdefs";

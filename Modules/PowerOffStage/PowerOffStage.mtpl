@@ -1,0 +1,111 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan PowerOffStage;
+
+Test ConfigureSerialPort SetupSerialPort
+{
+	BaudRate = "BR_115200";
+	ComPortNumber = 9;
+	DataBits = "DB_8";
+	Handshake = "NONE";
+	Parity = "NO_PARITY";
+	StopBits = "ONE";
+	Timeout = "00:00:30";
+}
+
+Test PythonScript RunStartupPy
+{
+	ScriptPath = "$FUSION_PYTHON_SCRIPT_DIR\\startup.py";
+	Timeout = "0:30:00";
+}
+
+# add more power control 
+Test PythonCommand IsTargetPowerOn
+{
+	Command = "TargetPowerControl.is_target_power_on('Env1')";
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand IsTargetPowerOff
+{
+	Command = "TargetPowerControl.is_target_power_off('env1')";
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand TargetPowerOffControl
+{
+	Command ="TargetPowerControl.target_power_off_control('env1')" ;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand TargetPowerOnControl
+{
+	Command ="TargetPowerControl.target_power_on_control('env1')" ;
+	Timeout = "0:00:30";
+}
+
+
+## add target_power_off_control / target_power_on_control
+
+## add flash bios - either using python / using bios test method provided by aguila
+
+
+Flow Initialization 
+{
+	FlowItem SetupSerialPort SetupSerialPort
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; } # always for for HW failure
+		Result -1 { Property PassFail = "Fail"; Return -1; } # always for SW failure
+		Result  0 { Property PassFail = "Fail"; Return 0; } # generic failure 
+		Result  1 { Property PassFail = "Pass"; GoTo RunStartupPy ;} 
+	}
+
+	FlowItem RunStartupPy RunStartupPy
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; } # generic failure 
+		Result  1 { Property PassFail = "Pass"; Return  1 ; } 
+	}
+}
+
+
+
+Flow PowerOffPlatform
+{
+	#FlowItem IsTargetPowerOff IsTargetPowerOff
+	#{
+	#	Result -2 { Property PassFail = "Fail"; Return -2; }
+	#	Result -1 { Property PassFail = "Fail"; Return -1; }
+	#	Result  0 { Property PassFail = "Fail"; Return  0; } # generic failure 
+	#	Result  1 { Property PassFail = "Pass"; GoTo TargetPowerOffControl ; } 
+	#}
+	#
+	#FlowItem TargetPowerOffControl TargetPowerOffControl
+	#{
+	#	Result -2 { Property PassFail = "Fail"; Return -2; }
+	#	Result -1 { Property PassFail = "Fail"; Return -1; }
+	#	Result  0 { Property PassFail = "Fail"; Return  0; } # generic failure 
+	#	Result  1 { Property PassFail = "Pass"; Return  1 ; } 
+	#}
+
+	FlowItem IsTargetPowerOn IsTargetPowerOn
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return 0;  }
+		Result  1 { Property PassFail = "Pass"; Return 1;  }
+	}
+	
+	FlowItem TargetPowerOnControl TargetPowerOnControl
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; } #generic Failure
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+}	
+
+#TODO add FlowItem definition

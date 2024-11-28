@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <CustomProjectExtensionsPath Condition=" '$(CustomProjectExtensionsPath)' == '' ">$(AguilaCustomProjectPath)\</CustomProjectExtensionsPath>
+    <BaseTestPlanFile>BaseTestPlan.tpl</BaseTestPlanFile>
+    <SubTestPlanFile>SubTestPlan.stpl</SubTestPlanFile>
+    <EnvironmentFile>EnvironmentFile.env</EnvironmentFile>
+    <TestProgramDir>..\..</TestProgramDir>
+    <ProjectGuid>e6819678-4cb8-45fb-b8ee-2e016d80b3e4</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(CustomProjectExtensionsPath)Aguila.ProjectSystem.TestProgram.props" />
+  <Import Project="$(CustomProjectExtensionsPath)Aguila.ProjectSystem.TestProgram.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\BootStageTransitions\BootStageTransitions.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\EFI\EFI.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\FailureRecovery\FailureRecovery.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\FuseOverrideAfterEfi\FuseOverrideAfterEfi.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\FuseOverride\FuseOverride.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\Intec\Intec.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\Lot_End\Lot_End.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\Lot_Start\Lot_Start.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\MCEModule\MCEModule.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\PowerOffStage\PowerOffStage.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\PreFlightFlow\PreFlightFlow.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\SearchCGEM\SearchCGEM.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\ShmooCGEM\ShmooCGEM.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\Unit_End\Unit_End.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\Unit_Start\Unit_Start.sysmtpproj" />
+    <ProjectReference Include="..\..\Modules\VoltageControl\VoltageControl.sysmtpproj" />
+    <ProjectReference Include="..\..\Shared\Common\Common.sysctpproj" />
+  </ItemGroup>
+</Project>

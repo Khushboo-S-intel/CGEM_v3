@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="Intec::SafeTemperatureFlow.ResetAllSafetyEvents" X="25" Y="25" />
+  <FlowItem name="Intec::SafeTemperatureFlow.LoadConfiguration" X="35" Y="45" />
+  <FlowItem name="Intec::SafeTemperatureFlow.EnableSensorsAtBootTransition" X="45" Y="65" />
+  <FlowItem name="Intec::TemperatureFlow.ChooseTemperature" X="25" Y="25" />
+  <FlowItem name="Intec::TemperatureFlow.SetClosedLoopControlAtBootTransitions" X="25" Y="25" />
+  <FlowItem name="Intec::TemperatureFlow.GetEnabledSensors" X="25" Y="25" />
+  <FlowItem name="Intec::BootTemperatureFlow.ChooseTemperature" X="25" Y="25" />
+  <FlowItem name="Intec::BootTemperatureFlow.SetTemperature" X="25" Y="25" />
+  <FlowItem name="Intec::VerifyTemperatureFlow.ShouldVerifyTemperature" X="25" Y="25" />
+  <FlowItem name="Intec::VerifyTemperatureFlow.VerifyTemperatureInitial" X="25" Y="25" />
+  <FlowItem name="Intec::TemperatureFlow.GetFeedbackTemperature" X="25" Y="25" />
+</HDMTFlowItemCoor>

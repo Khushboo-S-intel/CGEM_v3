@@ -1,0 +1,145 @@
+Version 1.0;
+
+UserVars AVXModeVars
+{
+    ## Axis Name - setting up Axis name for AVX Mode
+    String AxisName = "AVXMode";
+    
+    ## Is Active - setting up condition to set Active coordinate
+    Boolean SetAVX128 = False;
+    Boolean SetAVX256 = False;
+    Boolean SetAVX512 = False;
+
+    ## Step - setting up condition for resolution / step
+    Integer Step = 0;
+    
+    ## StopOn - setting up Shmoo/Search to stop on PASS or FAIL
+    String StopOn = "FAIL";
+    
+    ## AxisExitPort - Exit port to Setup Flow for AVX
+    Integer AxisExitPort = 20;
+
+    ## AxisCurrentValue - setting up default current value for Axis
+    String AxisCurrentValue = "128";
+
+     ## AxisCurrentValue - setting up default current value for Axis
+    Array<String> FixedValue = ['256'];
+
+    ## ListOfValues - list / range of values to set for AVX mode
+    Array<String>ListOfValues = ['256','512', 'AMX'];
+
+    ## AxisPointSetup - to mark point as PASS or FAIL SetupPoint
+    Boolean AxisPointSetup = False;
+
+    ## AxisMaxAllowedSetupFailures - setting up Max Allowed Setup Failures for Search
+    Integer AxisMaxAllowedSetupFailures = 0;
+    
+    ## AxisMaxAllowedConsecutiveSetupFailures - setting up Max Allowed Consecutive Setup Failures for Search
+    Integer AxisMaxAllowedConsecutiveSetupFailures = 0;
+
+    ## AxisMaxAllowedStopPoints - setting up Max Allowed Stop Points for Shmoo
+    Integer AxisMaxAllowedStopPoints = 0;
+    
+    ## AxisMaxAllowedStopPoints - setting up Max Allowed Consecutive Points for Shmoo
+    Integer AxisMaxAllowedConsecutiveStopPoints = 0;
+}
+
+
+UserVars FrequencyVars
+{
+    ## Axis Name - setting up Axis name for AVX Mode
+    String AxisName = "Frequency";
+
+    ## Is Active - setting up condition to set Active coordinate
+    Boolean SetFrequency8 = False;
+    Boolean SetFrequency16 = False;
+    
+    ## Step - setting up condition for resolution / step
+    Integer Step = 0;
+
+    ## StopOn - setting up Shmoo/Search to stop on PASS or FAIL
+    String StopOn = "FAIL";
+
+    ##  ## AxisExitPort - Exit port to Setup Flow for Frequency
+    Integer AxisExitPort = 20;
+    
+    ## AxisCurrentValue - setting up default current value for Axis
+    String AxisCurrentValue = "8";
+
+    Array<String> FixedValue = ['8'];
+
+    ## ListOfValues - list / range of values to set for AVX mode for Shmoo Multi-D
+    Array<String>ListOfValues = ['8','16'];
+    
+    ## Value - values to set for AVX mode for Search
+    Array<String> Value = ['8'];
+
+    ## AxisPointSetup - to mark point as PASS or FAIL SetupPoint
+    Boolean AxisPointSetup = False;
+
+    ## AxisMaxAllowedSetupFailures - setting up Max Allowed Setup Failures for Search
+    Integer AxisMaxAllowedSetupFailures = 0;
+
+    ## AxisMaxAllowedConsecutiveSetupFailures - setting up Max Allowed Consecutive Setup Failures for Search
+    Integer AxisMaxAllowedConsecutiveSetupFailures = 0;
+
+    ## AxisMaxAllowedStopPoints - setting up Max Allowed Stop Points for Shmoo
+    Integer AxisMaxAllowedStopPoints = 0;
+
+    ## AxisMaxAllowedStopPoints - setting up Max Allowed Consecutive Points for Shmoo
+    Integer AxisMaxAllowedConsecutiveStopPoints = 0;
+
+    ## SafeRegionMaxValue - setting up values for safe region
+    Integer SafeRegionMaxValue = 0;
+    Integer SafeRegionMinValue = 0;
+}
+
+UserVars TemperatureVars
+{
+    String AxisName = "Temperature";
+    Integer Step = 0;
+    String StopOn = "FAIL";
+    String MinValue = "75";
+    
+  
+
+    Integer AxisExitPort = 23;
+    String AxisCurrentValue = "75";
+
+     Array<String> FixedValue = ['75'];
+    Array<String>ListOfValues = ['75'];
+    Boolean AxisPointSetup = False;
+    Integer AxisMaxAllowedSetupFailures = 0;
+    Integer AxisMaxAllowedConsecutiveSetupFailures = 0;
+
+    Integer AxisMaxAllowedStopPoints = 0;
+    Integer AxisMaxAllowedConsecutiveStopPoints = 0;
+    
+    Integer SafeRegionMaxValue = 0;
+    Integer SafeRegionMinValue = 0;
+}
+
+UserVars VoltageVars
+{
+    String AxisName = "Voltage";
+    Integer AxisExitPort = 25;
+    Double Step = 0.01;
+    String AxisCurrentValue = "0.0";
+    String StopOn = "FAIL";
+    Boolean AxisPointSetup = False;
+    Integer AxisMaxAllowedSetupFailures = 0;
+    Integer AxisMaxAllowedConsecutiveSetupFailures=  0;
+
+    Integer AxisMaxAllowedStopPoints = 2;
+    Integer AxisMaxAllowedConsecutiveStopPoints = 2;
+
+    # Safe Region Voltage Set for Search
+    Double SafeRegionMaxValue = 0.5;
+    Double SafeRegionMinValue = 0.72;
+
+    #Boolean ProcessingLimiters = False;
+
+    Double MaxOffsetValue = 0.04;
+    Double MinOffsetValue = -0.03;
+    
+}

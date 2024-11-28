@@ -1,0 +1,21 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan Lot_End;
+
+Test Lot_End LotEndTest
+{
+	Timeout = "00:00:30";
+}
+
+Flow Lot_End
+{
+	FlowItem LotEndTest LotEndTest 
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Pass"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; Return 1; }
+	}
+}

@@ -1,0 +1,107 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan FuseOverride;
+
+#TODO add Import statements
+
+#TODO add Tests definitions
+
+
+Test DecisionNode DecisionNode
+{
+	DefaultDecisionExitPort = 1;
+	Timeout = "0:00:30";
+}
+
+######################## Core Ratio ############################
+
+Test PythonCommand SetCoreRatioFuse
+{
+	Command = EnvConditionsPythonCommand.Set_core_ratio_fuse;
+	Timeout = "0:03:00";
+} 
+
+Test PythonCommand VerifyCoreRatio
+{
+	Command = EnvConditionsPythonCommand.Verify_Core_Ratio_fuse;
+	Timeout = "0:10:00";
+}
+
+################################################################
+
+######################### Core Ratio Flow ######################
+Flow FuseOverride
+{
+    FlowItem ShouldSetCoreRatio DecisionNode
+    {
+        Result -2 { Property PassFail = "Fail"; Return -2; }
+        Result -1 { Property PassFail = "Fail"; Return -1; }
+        Result  0 { Property PassFail = "Fail"; Return  0; }
+        #Result  1 { Property PassFail = "Pass"; GoTo VerifySetCoreRatio; }
+        Result  1 { Property PassFail = "Pass"; GoTo SetCoreRatio; }
+        #Result 2 
+        #{
+        #    Property PassFail = "Pass";
+        #    SmartExitPort =>  FrequencyVars.AxisPointSetup == False;
+        #    GoTo SetCoreRatio;
+        #}
+    }
+
+    FlowItem SetCoreRatio SetCoreRatioFuse
+    {
+        Result -2 { Property PassFail = "Fail"; Return -2; }
+        Result -1 { Property PassFail = "Fail"; Return -1; }
+        Result  0 { Property PassFail = "Fail"; Return  0; }
+        Result  1 { 
+            Property PassFail = "Pass";
+            #Set FrequencyVars.AxisPointSetup = True; 
+            #Return  1; 
+            GoTo VerifySetCoreRatio;
+        }
+
+        #Result 2 {
+        #    SmartExitPort => (CoreRatioGlobalEfiUsrvr.Set == true);
+        #    GoTo VerifySetCoreRatio;
+        #}
+    }
+    FlowItem VerifySetCoreRatio VerifyCoreRatioFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+        Result  0 { Property PassFail = "Pass"; Return  0; }
+        Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+}
+
+Flow VerifyCoreRatioFlow
+{
+    FlowItem ShouldVerifyCoreRatio DecisionNode
+    {
+        Result -2 { Property PassFail = "Fail"; Return -2; }
+        Result -1 { Property PassFail = "Fail"; Return -1; }
+        Result  0 { Property PassFail = "Pass"; Return  0; }
+        Result  1 { Property PassFail = "Pass"; Return  1; }
+        #Result  2 
+        #{
+        #    # If CoreRatio axis was set verify coreratio set condition.
+        #    SmartExitPort => FrequencyVars.AxisPointSetup == True;
+        #    GoTo VerifyCoreRatio;
+        #}
+    }
+
+    FlowItem VerifyCoreRatio VerifyCoreRatio
+    {
+        Result -2 { Property PassFail = "Fail"; Return -2; }
+        Result -1 { Property PassFail = "Fail"; Return -1; }
+        Result  0 { Property PassFail = "Pass"; Return  0; }
+        Result  1 { Property PassFail = "Pass"; Return  1; }
+        #Result  2 {
+        #    SmartExitPort => ($Result.ExitPort == 1) && ($Result.PythonResult == "Failed");
+        #    Set CoreRatioGlobalEfiUsrvr.Set = false;
+        #    Return -1;
+        #}
+    }
+}
+

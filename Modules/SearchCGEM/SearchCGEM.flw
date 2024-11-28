@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="SearchCGEM::Search.RunSearch" X="25" Y="25" />
+  <FlowItem name="SearchCGEM::Search.SetupAVXFrequency" X="35" Y="45" />
+  <FlowItem name="SearchCGEM::Search.SetupTemperature" X="45" Y="65" />
+  <FlowItem name="SearchCGEM::Search.SetCoreVoltageFlow" X="55" Y="85" />
+  <FlowItem name="SearchCGEM::Search.PostPassFailActionsFlow" X="65" Y="105" />
+  <FlowItem name="SearchCGEM::SetupAVXFrequency.RebootAndReapply" X="25" Y="25" />
+  <FlowItem name="SearchCGEM::SetupAVXFrequency.BootFromPowerOffToEfi" X="25" Y="25" />
+  <FlowItem name="SearchCGEM::SetupAVXFrequency.SetupAVXMode" X="25" Y="25" />
+  <FlowItem name="SearchCGEM::SetupAVXFrequency.SetupFrequency" X="25" Y="25" />
+</HDMTFlowItemCoor>

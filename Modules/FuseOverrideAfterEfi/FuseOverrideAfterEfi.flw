@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="FuseOverrideAfterEfi::FuseOverrideAfterEfi.Set_Core_Acode_Ratio" X="25" Y="25" />
+  <FlowItem name="FuseOverrideAfterEfi::Set_Core_Acode_Ratio.Core_Acode_Ratio" X="25" Y="25" />
+</HDMTFlowItemCoor>

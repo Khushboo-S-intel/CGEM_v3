@@ -1,0 +1,22 @@
+Version 1.0;
+
+SubTestPlans
+{
+	"..\\..\\Modules\\BootStageTransitions\\BootStageTransitions.mtpl";
+	"..\\..\\Modules\\EFI\\EFI.mtpl";
+	"..\\..\\Modules\\FailureRecovery\\FailureRecovery.mtpl";
+	"..\\..\\Modules\\FuseOverrideAfterEfi\\FuseOverrideAfterEfi.mtpl";
+	"..\\..\\Modules\\FuseOverride\\FuseOverride.mtpl";
+	"..\\..\\Modules\\Intec\\Intec.mtpl";
+	"..\\..\\Modules\\Lot_End\\Lot_End.mtpl";
+	"..\\..\\Modules\\Lot_Start\\Lot_Start.mtpl";
+	"..\\..\\Modules\\MCEModule\\MCEModule.mtpl";
+	"..\\..\\Modules\\PowerOffStage\\PowerOffStage.mtpl";
+	"..\\..\\Modules\\PreFlightFlow\\PreFlightFlow.mtpl";
+	"..\\..\\Modules\\SearchCGEM\\SearchCGEM.mtpl";
+	"..\\..\\Modules\\ShmooCGEM\\ShmooCGEM.mtpl";
+	"..\\..\\Modules\\Unit_End\\Unit_End.mtpl";
+	"..\\..\\Modules\\Unit_Start\\Unit_Start.mtpl";
+	"..\\..\\Modules\\VoltageControl\\VoltageControl.mtpl";
+	Final ".\\TestPlanFlows\\IACore_Search_Flow_WW47.mtpl";
+}

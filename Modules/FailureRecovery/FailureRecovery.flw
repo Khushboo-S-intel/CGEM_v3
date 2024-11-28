@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.PowerOffTarget" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.BootFromPowerOffToEfi" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.ReadProductConfigs" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.SetAVXModeFlow" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.SetCoreRatioFlow" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.TemperatureFlow" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::FullRecoveryFlow.SetVparallelPcodeCoreVoltage" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::PostPassFailActionsFlow.ContentFailuresDecisionNode" X="25" Y="25" />
+  <FlowItem name="FailureRecovery::PostPassFailActionsFlow.FullRecoveryFlow" X="240" Y="67" />
+</HDMTFlowItemCoor>

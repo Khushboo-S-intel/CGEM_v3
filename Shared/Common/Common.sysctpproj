@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <CustomProjectExtensionsPath Condition=" '$(CustomProjectExtensionsPath)' == '' ">$(AguilaCustomProjectPath)\</CustomProjectExtensionsPath>
+    <ProjectGuid>cfe7c776-ea2f-454b-b2c5-a211f8eec84e</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(CustomProjectExtensionsPath)Aguila.ProjectSystem.Common.props" />
+  <Import Project="$(CustomProjectExtensionsPath)Aguila.ProjectSystem.Common.targets" />
+  <ItemGroup>
+    <Folder Include="Test_Program_Content\" />
+    <Folder Include="Fuses\" />
+  </ItemGroup>
+</Project>

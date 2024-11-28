@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="MCEModule::CollectMCEFlow.IsPlatformPoweredUp" X="25" Y="25" />
+  <FlowItem name="MCEModule::CollectMCEFlow.GetMCE" X="35" Y="45" />
+</HDMTFlowItemCoor>

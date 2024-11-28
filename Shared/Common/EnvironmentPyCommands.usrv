@@ -1,0 +1,62 @@
+Version 1.0;
+
+UserVars ProjectStartUp
+{
+    String PythonConsoleStartupScript = "C:\\STHI\\Fusion\\PythonScripts\\Startup.py";
+    Integer SerialTransportComPort = 5;
+}
+
+UserVars EnvConditionsPythonCommand
+{
+    
+    #Set/Read temperature
+    String Verify_temperature = "DecimalEnvironmentalConditionControl.read_condition_measured('"+ toString(TemperatureVars.AxisName) +"')";
+    #String Set_temperature = "DecimalEnvironmentalConditionControl.set_condition('"+ toString(TemperatureVars.AxisName) +"'," + toString(ExperimentSetup.TemperatureToSet) + ")";
+    String Set_temperature = "DecimalEnvironmentalConditionControl.set_condition('"+ toString(TemperatureVars.AxisName) +"'," + toString(TemperatureVars.AxisCurrentValue) + ")";
+
+    #Set and Read Core Ratio
+    String Set_core_ratio_fuse   ="DecimalEnvironmentalConditionControl.set_condition('"+ toString(FrequencyVars.AxisName) +"'," + toString(FrequencyVars.AxisCurrentValue) + ")";
+    String Verify_Core_Ratio_fuse   ="DecimalEnvironmentalConditionControl.read_condition_measured('"+ toString(FrequencyVars.AxisName) +"')";
+
+    #Set/Read AVX Mode
+    String Set_avx_mode_fuse = "StringEnvironmentalConditionControl.set_condition('"+ toString(AVXModeVars.AxisName)+"','"+ (AVXModeVars.AxisCurrentValue) +"')";
+    String Verify_avx_mode_fuse = "StringEnvironmentalConditionControl.read_condition_set_point('"+ toString(AVXModeVars.AxisName)+"')";
+    
+    #ITD Disable
+    String Itd_Disable = "StringEnvironmentalConditionControl.set_itd('Disable_All', '" + EnableDisableCommand.Disabled + "')";
+    #String Itd_Disable = "StringEnvironmentalConditionControl.ItdDisable('IACore', '" + EnableDisableCommand.Disabled + "')";
+    
+    #MaxchineCheckExceptions
+    String MCE_Check = "MachineCheckException.main()";
+    String CalculateCoreVoltageMax = "DecimalEnvironmentalConditionControl.set_condition('"+ toString(VoltageVars.AxisName) +"',"+toString(VoltageVars.AxisCurrentValue)+")";
+    
+    #Set/Read Core voltage conditions
+    String Set_Core0_Voltage ="DecimalEnvironmentalConditionControl.set_condition('"+ toString(VoltageVars.AxisName) +"', " + toString(VoltageVars.AxisCurrentValue) + ")";
+    String Read_Core0_Voltage="DecimalEnvironmentalConditionControl.read_condition_measured('"+ toString(VoltageVars.AxisName) +"')";
+    #String Set_core_voltage_vparallel ="DecimalEnvironmentalConditionControl.set_condition('"+ toString(VoltageVars.AxisName) +"', " + toString(VoltageVars.AxisCurrentValue) + ")";
+    #String Read_core_voltage_vparallel ="DecimalEnvironmentalConditionControl.read_condition_measured('"+ toString(VoltageVars.AxisName) +"')";
+    #String Set_core_voltage_vparallel_pcode ="DecimalEnvironmentalConditionControl.set_condition('"+ toString(VoltageVars.AxisName) +"', " + toString(VoltageVars.AxisCurrentValue) + ")";
+    #String Read_core_voltage_vparallel_pcode="DecimalEnvironmentalConditionControl.read_condition_measured('"+ toString(VoltageVars.AxisName) +"')";
+    
+    #String Set_core_voltage_pcode_vparallel ="DecimalEnvironmentalConditionControl.set_condition('"+ toString(CoreVoltagePcodeVparallelUsrvr.AxisName) +"', " + toString(CoreVoltagePcodeVparallelUsrvr.AxisCurrentValue) + ")";
+    #String Read_core_voltage_pcode_vparallel="DecimalEnvironmentalConditionControl.read_condition_measured('"+ toString(CoreVoltagePcodeVparallelUsrvr.AxisName) +"')";
+    
+}
+
+UserVars Set_Voltage
+{
+    String IA_Core = "vparallel_pcode";
+}
+
+UserVars EnableDisableCommand
+{
+    String Enabled = "enable";
+    String Disabled = "disable";
+}
+
+UserVars Boot
+{
+    String PowerOffStageToCciFuseBreak = "BootStageTransitions.start_transition_to_boot_stage('PowerOffStage', 'CciFuseBreak', 1800000)";
+    String CciFuseBreakToBootHaltStage = "BootStageTransitions.start_transition_to_boot_stage('CciFuseBreak', 'BootHaltStage', 1800000)";
+    String BootHaltStageToEfiStage = "BootStageTransitions.start_transition_to_boot_stage('BootHaltStage', 'EfiStage', 1800000)";
+}

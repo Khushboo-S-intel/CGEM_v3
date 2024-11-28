@@ -1,0 +1,159 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan SearchCGEM;
+
+
+##								   Search CGEM								##
+## -------------------------------------------------------------------------##
+
+Test DecisionNode NoOperation
+{
+	DefaultDecisionExitPort = 1 ;
+	Timeout = "0:00:30";
+}
+
+Test MarionetteExecuteContent Search_ExecuteDragonTest # From Shmoo Limiter ---> Search limiter Vmin is expected
+{
+    BootStage = ContentExecutionSetupVars.BootStage;
+    ContentGroup = IACore_Wc_limiters;
+    Timeout = ContentExecutionSetupVars.Timeout;
+    Transport = MarionetteSerialTransport { ComPort = SerialPortSetupVars.ComPortNumber; };
+    EnablePostFailActions = PostActionsSetupVars.PostFail; #2
+    EnablePostPassActions = PostActionsSetupVars.PostPass; # can do anything after passing the test
+    ContentGroupExecutionMode = SearchMode
+    {
+		MaxNumberOfTestRuns = ContentExecutionSetupVars.MaxNumberOfTestRuns;
+		RequiredNumberOfPasses = ContentExecutionSetupVars.RequiredNumberOfPasses;
+		MaxAllowedFailures = ContentExecutionSetupVars.MaxAllowedFailures;
+        MaxAllowedConsecutiveFailures = ContentExecutionSetupVars.MaxAllowedConsecutiveFailures;
+        ExperimentName = SearchExperimentSetup.SearchExperimentName;
+        Domain = SearchExperimentSetup.SearchDomainName;
+        SearchForMin = SearchParam.SearchForMin;
+        NumberOfLimiters = SearchParam.NumberOfLimiters;
+		# uservar to hold Limiters values found in Search
+        SaveSearchLimitersTo = nameof(SearchParam.SearchLimiters);
+		SearchSSFLimiters = {
+            IsEnabled = SearchParam.IsSearchSSFEnabled;
+            InputLimiters = ShmooParam.SweetSpotLimiters;
+		};
+		SearchAxes = SearchAxesSetupVars.IACoreSearchAxes;
+	};
+}
+
+Flow Search
+{
+	FlowItem RunSearch Search_ExecuteDragonTest
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; Return 1; }
+
+		## Post Fail Action
+		Result 2 
+		{
+			Property PassFail = "Fail"; 
+			Call PostPassFailActionsFlow;
+		}
+
+		# Post Pass Action
+		Result 3
+		{
+			Property PassFail = "Pass";
+			Call PostPassFailActionsFlow;
+		}
+
+
+		## 1st Axis and 2nd Axis Setup: Setting up AVX Mode and Frequency (Required boot - using same setup flow)
+		Result  20 { 
+			Property PassFail = "Pass";
+			Call SetupAVXFrequency;}     
+
+		## 3rd Axis Setup: Setting up Temperature
+		Result  23 { 
+			Property PassFail = "Pass"; 
+			Call SetupTemperature;}   
+
+		Result  25 { 
+			Property PassFail = "Pass";
+			Call SetCoreVoltageFlow;}
+
+	}
+
+	FlowItem SetupAVXFrequency SetupAVXFrequency
+	{
+		Result -2 { Property PassFail = "Fail"; Back -2; }
+		Result -1 { Property PassFail = "Fail"; Back -1; }
+		Result 0 { Property PassFail = "Fail"; Back 0; }
+		Result 1 { Property PassFail = "Pass"; Back 1; }
+	}
+
+	FlowItem SetupTemperature Temperature::TemperatureFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Back -2; }
+		Result -1 { Property PassFail = "Fail"; Back -1; }
+		Result 0 { Property PassFail = "Fail"; Back 0; }
+		Result 1 { Property PassFail = "Pass"; Set TemperatureVars.AxisPointSetup = True; Back 1; }
+	}
+
+	FlowItem SetCoreVoltageFlow CoreVoltage::SetCoreVoltageFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Back -2; }
+		Result -1 { Property PassFail = "Fail"; Back -1; }
+		Result 0 { Property PassFail = "Fail"; Back 0; }
+		Result 1 { Property PassFail = "Pass"; Set VoltageVars.AxisPointSetup = True; Set DecisionNode.RebootAndReapplySetup = False; Back 1; }
+	}
+
+	FlowItem PostPassFailActionsFlow FailureRecovery::PostPassFailActionsFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Back -2; }
+		Result -1 { Property PassFail = "Fail"; Back -1; }
+		Result 0 { Property PassFail = "Fail"; Back 0; }
+		Result 1 { Property PassFail = "Pass"; Back 1; }
+	}
+}
+
+Flow SetupAVXFrequency
+{
+    FlowItem RebootAndReapply NoOperation
+	{
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 {
+			Property PassFail = "Pass";
+			Set AVXModeVars.AxisPointSetup = True;
+			Set FrequencyVars.AxisPointSetup = True;
+			Return 1; }
+		Result 2 { 
+			Property PassFail = "Pass"; 
+			SmartExitPort => DecisionNode.RebootAndReapplySetup == False;
+			
+	        GoTo BootFromPowerOffToEfi;
+		}
+	}
+	FlowItem BootFromPowerOffToEfi BootStageTransitions::BootFlow_WithRetries
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; GoTo SetupAVXMode; }
+	}
+
+	FlowItem SetupAVXMode AvxMode::SetAVXModeFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Set AVXModeVars.AxisPointSetup = False; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Set AVXModeVars.AxisPointSetup = False; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Set AVXModeVars.AxisPointSetup = False; Return 0; }
+		Result 1 { Property PassFail = "Pass"; Set AVXModeVars.AxisPointSetup = True; GoTo SetupFrequency; }
+	}
+
+	FlowItem SetupFrequency SearchRatioFlow::SetCoreRatioFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Set FrequencyVars.AxisPointSetup = False; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Set FrequencyVars.AxisPointSetup = False; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Set FrequencyVars.AxisPointSetup = False; Return 0; }
+		Result 1 { Property PassFail = "Pass"; Set FrequencyVars.AxisPointSetup = True; Return 1; }
+	}
+}

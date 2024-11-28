@@ -1,0 +1,94 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan PreFlightFlow;
+
+#TODO add Import statements
+
+#TODO add Tests definitions
+
+Test ConfigureSerialPort ConfigureSerialPort
+{
+	BaudRate = SerialPortSetupVars.BaudRate;
+	ComPortNumber = SerialPortSetupVars.ComPortNumber;
+	DataBits = SerialPortSetupVars.DataBits;
+	Handshake = SerialPortSetupVars.Handshake;
+	Parity = SerialPortSetupVars.Parity;
+	StopBits = SerialPortSetupVars.StopBits;
+	Timeout = "0:01:00";
+}
+
+Test PythonCommand test_program_env
+{
+	Command = EnvConditionsPythonCommand.Set_Test_Program_Env;
+	Timeout = "00:20:01";
+}
+
+Test PythonScript KillOldPython
+{
+	ScriptPath = "C:\\sthi\\Fusion\\PythonScripts\\kill_python_process.py"; 
+	Timeout = "00:00:10"; #USER TODO: define value
+}
+
+### restart Python console
+Test RestartPythonConsole RestartPythonService
+{
+	TypeOfRestart = "GrpcService";
+	Timeout = "00:00:20";
+}
+
+Test PythonScript PythonConsoleStartupScript
+{
+	ScriptPath = ProjectStartUp.PythonConsoleStartupScript;
+	Timeout = "00:30:00";
+}
+
+Flow PreFlightFlow
+{
+	FlowItem ConfigureSerialPort ConfigureSerialPort
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; GoTo KillOldPython;}
+	}
+	FlowItem KillOldPython KillOldPython
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; GoTo RestartPythonService;}
+	}
+	FlowItem RestartPythonService RestartPythonService
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; GoTo PythonConsoleStartupScript;}
+	}
+	FlowItem PythonConsoleStartupScript PythonConsoleStartupScript
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; Return 1;}
+	}
+	FlowItem PythonSetAguila test_program_env
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0
+		{
+			Property PassFail = "Fail";
+			Return 0;
+		}
+
+		Result 1 
+		{
+			Property PassFail = "Pass";
+			Return 1;
+		}
+	}
+}
+

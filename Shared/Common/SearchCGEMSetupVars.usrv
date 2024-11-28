@@ -1,0 +1,137 @@
+Version 1.0;
+
+
+UserVars SearchExperimentSetup
+{
+	String SearchExperimentName = "ExperimentName";
+	String SearchDomainName = "DomainName";
+}
+
+
+UserVars SearchParam
+{
+    ## IsSearchSSFEnabled - to decide whether to use limiter's information from SSF
+    Boolean IsSearchSSFEnabled = True;
+
+    ## SearchLimiters - to hold / store limiter data found from Search
+	Array<ShmooLineLimiter> SearchLimiters = null;
+
+    ## PostScrubLimiters - to hold / store limiter data found from PostScrub
+	Array<ShmooLineLimiter> PostScrubLimiters = null;
+
+    ## SearchForMin - To decide to SearchForMin or SearchForMax
+    Boolean SearchForMin = True;
+
+    ## NiumberOfLimiters -- to set up how many limiters (worst) need to be reported from Search
+    Integer NumberOfLimiters = 1;
+	
+}
+
+UserVars SearchAxesSetupVars
+{
+	Array<SearchAxis> IACoreSearchAxes = [
+          SearchAxes.AVXModeAxis,
+          SearchAxes.FrequencyAxis,
+		  SearchAxes.TemperatureAxis,
+		  SearchAxes.VoltageAxis
+    ];
+}
+
+UserVars SearchAxes
+{
+	##					Axis Setup for AVX Mode				##
+	## ---------------------------------------------------- ##
+ #   SearchAxis AVXModeAxis =
+ #   {
+ #       AxisName = AVXModeVars.AxisName;
+ #       AxisCoordinates = 
+ #       [ 
+#			## This Axis will always be active -- add more condition if needed.
+ #           { 
+ #               IsActive = True; 
+ #               Values = AVXModeVars.FixedValue;
+ #               Step = AVXModeVars.Step;
+ #               StopOn = AVXModeVars.StopOn;
+ #           },
+ #       ];
+ #       AxisSetupFlowExitPort = AVXModeVars.AxisExitPort;
+ #       AxisValueToSet = nameof(AVXModeVars.AxisCurrentValue); # by default the current value set to 128
+ #       AxisSetupPassed = nameof(AVXModeVars.AxisPointSetup);
+ #       AxisMaxAllowedSetupFailures = AVXModeVars.AxisMaxAllowedSetupFailures;    
+ #       AxisMaxAllowedConsecutiveSetupFailures = AVXModeVars.AxisMaxAllowedConsecutiveSetupFailures;
+ #   };
+
+	##			    Axis Setup for Temperature Mode		    ##
+	## ---------------------------------------------------- ##
+    SearchAxis TemperatureAxis = {
+        AxisName = TemperatureVars.AxisName;
+        AxisCoordinates = 
+        [ 
+            ## This Axis will always be active -- add more condition if needed.
+            { 
+                IsActive = True; 
+                Values = TemperatureVars.FixedValue;
+                Step = TemperatureVars.Step;
+                StopOn = TemperatureVars.StopOn;
+            }
+        ];
+        AxisSetupFlowExitPort = TemperatureVars.AxisExitPort;
+        AxisMaxAllowedSetupFailures = TemperatureVars.AxisMaxAllowedSetupFailures;
+        AxisMaxAllowedConsecutiveSetupFailures = TemperatureVars.AxisMaxAllowedConsecutiveSetupFailures;
+        AxisValueToSet = nameof(TemperatureVars.AxisCurrentValue);
+        AxisSetupPassed = nameof(TemperatureVars.AxisPointSetup);
+        #AxisSafeRegion = [TemperatureUsrvr.SafeMinValue, TemperatureUsrvr.SafeMaxValue];
+    };
+
+    ##				  Axis Setup for Core Ratio		        ##
+	## ---------------------------------------------------- ##
+    SearchAxis FrequencyAxis = {
+	    AxisName = FrequencyVars.AxisName;
+	    AxisCoordinates = 
+	    [ 
+             ## This Axis will always be active -- add more condition if needed. 
+		     { 
+				IsActive = True; 
+				Values = FrequencyVars.FixedValue;
+				Step = FrequencyVars.Step;
+				StopOn = FrequencyVars.StopOn;
+			 }
+	    ];
+	    AxisSetupFlowExitPort = FrequencyVars.AxisExitPort;
+        AxisMaxAllowedSetupFailures = FrequencyVars.AxisMaxAllowedSetupFailures;
+        AxisMaxAllowedConsecutiveSetupFailures = FrequencyVars.AxisMaxAllowedConsecutiveSetupFailures;
+	    AxisValueToSet = nameof(FrequencyVars.AxisCurrentValue);# by default current value set to 8
+	    AxisSetupPassed = nameof(FrequencyVars.AxisPointSetup);
+    };
+
+	##		Axis Setup for Core Voltage Parallel Pcode      ##
+	## ---------------------------------------------------- ##
+    SearchAxis VoltageAxis = {
+        AxisName = VoltageVars.AxisName;
+		AxisSafeRegion = [VoltageVars.SafeRegionMinValue, VoltageVars.SafeRegionMaxValue];
+        AxisCoordinates = 
+        [
+              ## This Axis have different coordinates that will be active depending on the current Frequency value set -- add more condition if needed.
+              { 
+
+					IsActive = FrequencyVars.AxisCurrentValue == "8"; 
+					Offset = [IASearchSetup.MinOffsetSearch, IASearchSetup.MaxOffsetSearch]; ## VoltageVars.OffSetValues
+					Step = VoltageVars.Step;
+					StopOn = VoltageVars.StopOn;
+              },
+
+              {
+                    IsActive = FrequencyVars.AxisCurrentValue == "16"; 
+					Offset = [IASearchSetup.MinOffsetSearch, IASearchSetup.MaxOffsetSearch];
+					Step = VoltageVars.Step;
+					StopOn = VoltageVars.StopOn;
+			  }
+				
+        ];
+        AxisSetupFlowExitPort = VoltageVars.AxisExitPort;
+        AxisMaxAllowedSetupFailures = VoltageVars.AxisMaxAllowedSetupFailures;
+        AxisMaxAllowedConsecutiveSetupFailures = VoltageVars.AxisMaxAllowedConsecutiveSetupFailures;
+        AxisValueToSet = nameof(VoltageVars.AxisCurrentValue);
+        AxisSetupPassed = nameof(VoltageVars.AxisPointSetup);
+    };
+}

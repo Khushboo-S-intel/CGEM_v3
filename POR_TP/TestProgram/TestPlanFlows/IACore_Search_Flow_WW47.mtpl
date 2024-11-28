@@ -1,0 +1,261 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+TestPlan IACore_Search_512_800;
+
+## -------------------------------------------------------------------------##
+##				                  Test Methods								##
+## -------------------------------------------------------------------------##
+
+#-- To print content name
+Test PythonCommand PlatformRecovery
+{
+	Command = "print(\"Pretending to recover platform, re-applying all conditions: Frequency: " + FrequencyVars.AxisCurrentValue +
+				"; Temperature: " + TemperatureVars.AxisCurrentValue + "; LastContentNameExecuted: " + ContentName.LastContentNameExecuted + "; Voltage: " + VoltageVars.AxisCurrentValue + "\")";
+	Timeout = "00:00:01";
+}
+
+Test DecisionNode NoOperation
+{
+	DefaultDecisionExitPort = 1 ;
+	Timeout = "0:00:30";
+}
+
+##								   Flow Defs						        ##
+## -------------------------------------------------------------------------##
+FlowDefs
+{
+    #InitFlow = INIT;
+    #LotStartFlow = LotSetUp::LotSetUpFlow;
+    #UnitStartFlow = UnitSetUp::UnitSetUpFlow;
+    #IACore_Search_512_800 = IACore_Search_512_800;
+    Full_Search_IACore_Domain = Full_Search_IACore_Domain; 
+    #UnitEndFlow = UnitEnd::UnitEndFlow;
+    LotEndFlow = LotEnd::LotEndFlow;
+}
+
+
+##								   Flows								    ##
+## -------------------------------------------------------------------------##
+
+Flow Full_Search_IACore_Domain
+{
+	FlowItem PreFlightFlow PreFlightFlow::PreFlightFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { Property PassFail = "Fail"; Return  0; }
+		Result 1  { Property PassFail = "Pass"; GoTo PrepareSetupForSSF; }
+	}
+	FlowItem PrepareSetupForSSF NoOperation
+	{
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { Property PassFail = "Fail"; Return  0; }
+		Result 1  { 
+			Property PassFail = "Pass"; 
+			
+			## Setting up content configuration for SSF run
+			 Set ContentExecutionSetupVars.Timeout = IAContentSetup.Timeout;
+			 Set ContentExecutionSetupVars.BootStage = IAContentSetup.BootStage;
+			 Set ContentExecutionSetupVars.MaxNumberOfTestRuns = IAContentSetup.MaxNumberOfTestRuns;
+			 Set ContentExecutionSetupVars.RequiredNumberOfPasses = IAContentSetup.RequiredNumberOfPasses;
+			 Set ContentExecutionSetupVars.MaxAllowedFailures = IAContentSetup.MaxAllowedFailures;
+			 Set ContentExecutionSetupVars.MaxAllowedConsecutiveFailures = IAContentSetup.MaxAllowedConsecutiveFailures;
+			 Set PostActionsSetupVars.PostFail = IAContentSetup.PostFail;
+			 Set PostActionsSetupVars.PostPass = IAContentSetup.PostPass;
+			 Set ContentExecutionSetupVars.VvarRegex = IAContentSetup.VvarRegex;
+
+			# Setting up Shmoo mode configuration for SSF run
+			Set ShmooExperimentSetup.ShmooExperimentName = IASSFSetup.ShmooExperimentName;
+			Set ShmooExperimentSetup.ShmooExperimentName = IASSFSetup.ShmooDomainName;
+			#Set SearchParam.ShmooLimiterDestination = IASSFSetup.ShmooLimiterDestination;
+
+			# by default,IsPostScrubEnabled was set to False
+			Set ShmooParam.IsPostScrubEnabled = IASSFSetup.IsPostScrubEnabled;
+
+			# Setting up Axis Name Lit of Values to run
+			Set AVXModeVars.AxisName = IASSFSetup.AVXModeAxisName;
+			Set AVXModeVars.ListOfValues = IASSFSetup.AVXModeValues;
+			
+			Set FrequencyVars.AxisName = IASSFSetup.FrequencyAxisName;
+			Set FrequencyVars.ListOfValues = IASSFSetup.FrequencyValues;
+
+			Set TemperatureVars.AxisName = IASSFSetup.TemperatureAxisName;
+			Set TemperatureVars.ListOfValues = IASSFSetup.TemperatureValues;
+
+			Set VoltageVars.AxisName = IASSFSetup.VoltageAxisName;
+
+			# Setting up VF Cruve
+			Set VfCurveSetupVars.VoltageName = IASSFSetup.VFCurveVoltageName;
+			Set VfCurveSetupVars.FrequencyName = IASSFSetup.VFCurveFrequencyName;
+
+			# Setting up Shmoo CGEM Axes
+			Set ShmooAxesSetupVars.IACoreShmooAxes = IASSFSetup.IAShmooAxes;
+
+			GoTo RunSSF_ShmooIACore; 
+		}
+	}
+
+	FlowItem RunSSF_ShmooIACore ShmooCGEM::Shmoo
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { Property PassFail = "Fail"; Return  0; }
+
+		## Shmoo completed (with limiter/s) proceed to Search experiment
+		Result 1  { Property PassFail = "Pass"; GoTo PrepareForSearch; }
+		
+		## Shmoo completed (without limiter/s) stop experiment (not continue). PDE willl make adjustment on the Shmoo setup	
+		Result 2 {
+			Property PassFail = "Pass";
+
+			## evaluate if there is no limiter (All point pass / all point fail will resulted in no limiter)
+			SmartExitPort => ShmooParam.SweetSpotLimiters == null;
+			Return 2;
+		}
+	}
+
+	FlowItem PrepareForSearch NoOperation
+	{
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { 
+			Property PassFail = "Fail"; 
+			## this to stop the flow since PostScrub already ran.
+			#SmartExitPort => ShmooParam.IsPostScrubEnabled == True;
+			Return  0; }
+		Result 1  { 
+			Property PassFail = "Pass"; 
+			
+			## this to continue the flow since PostScrub not yet run.
+			#SmartExitPort => ShmooParam.IsPostScrubEnabled == False;
+
+			## Setting up content configuration for Search run
+			 Set ContentExecutionSetupVars.Timeout = IAContentSetup.Timeout;
+			 Set ContentExecutionSetupVars.BootStage = IAContentSetup.BootStage;
+			 Set ContentExecutionSetupVars.MaxNumberOfTestRuns = IAContentSetup.MaxNumberOfTestRuns;
+			 Set ContentExecutionSetupVars.RequiredNumberOfPasses = IAContentSetup.RequiredNumberOfPasses;
+			 Set ContentExecutionSetupVars.MaxAllowedFailures = IAContentSetup.MaxAllowedFailures;
+			 Set ContentExecutionSetupVars.MaxAllowedConsecutiveFailures = IAContentSetup.MaxAllowedConsecutiveFailures;
+			 Set PostActionsSetupVars.PostFail = IAContentSetup.PostFail;
+			 Set PostActionsSetupVars.PostPass = IAContentSetup.PostPass;
+			 Set ContentExecutionSetupVars.VvarRegex = IAContentSetup.VvarRegex;
+
+			# Setting up Search mode configuration for Search run
+			Set SearchExperimentSetup.SearchExperimentName = IASearchSetup.SearchExperimentName;
+			Set SearchExperimentSetup.SearchExperimentName = IASearchSetup.SearchDomainName;
+			#Set SearchParam.ShmooLimiterDestination = IASearchSetup.ShmooLimiterDestination;
+
+			Set SearchParam.SearchForMin = IASearchSetup.SearchForVmin;
+			Set SearchParam.NumberOfLimiters = IASearchSetup.NumberOfLimiters;
+			Set SearchParam.IsSearchSSFEnabled = IASearchSetup.IsSearchSSFEnabled;
+
+			#Set VoltageVars.SafeRegionMaxValue = 0.0;
+			#Set VoltageVars.SafeRegionMinValue = 0.0;
+
+			
+			# Setting up Axis Name
+			Set AVXModeVars.AxisName = IASearchSetup.AVXModeAxisName;
+			Set AVXModeVars.ListOfValues = IASearchSetup.AVXModeValue;
+			
+			Set FrequencyVars.AxisName = IASearchSetup.FrequencyAxisName;
+			Set FrequencyVars.ListOfValues = IASearchSetup.FrequencyValue;
+
+			Set TemperatureVars.AxisName = IASearchSetup.TemperatureAxisName;
+			Set TemperatureVars.ListOfValues = IASearchSetup.TemperatureValue;
+
+			Set VoltageVars.AxisName = IASearchSetup.VoltageAxisName;
+
+			# Setting uo Search CGEM Axes
+			Set SearchAxesSetupVars.IACoreSearchAxes = IASearchSetup.IASearchAxes;
+
+			GoTo RunSearch_IACore; 
+		}
+	}
+
+	FlowItem RunSearch_IACore SearchCGEM::Search
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { Property PassFail = "Fail"; Return  0; }
+
+		## Shmoo completed (with limiter/s) proceed to Search experiment
+		Result 1  { Property PassFail = "Pass"; GoTo PreparePostScrub; }
+		
+		## Search completed (without limiter/s) stop experiment (not continue). PDE willl make adjustment on the Search setup	
+		Result 2 {
+			Property PassFail = "Pass";
+
+			## evaluate if there is no limiter (All point pass / all point fail will resulted in no limiter)
+			SmartExitPort => SearchParam.SearchLimiters == null;
+
+			## this will stop the Search from continue to PostScrub
+			Return 2;
+		}
+	}
+
+	## Completed validation on SSF and Search before continue developing and validating  PostScrub
+	FlowItem PreparePostScrub NoOperation 
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { Property PassFail = "Fail"; Return  0; }
+		Result 1  { 
+			Property PassFail = "Pass"; 
+			
+			
+			## Setting up content configuration for PostScrub run - doesnt need to make too many changes unless needed.
+			 Set ContentExecutionSetupVars.Timeout = IAContentSetup.Timeout;
+			 Set ContentExecutionSetupVars.BootStage = IAContentSetup.BootStage;
+			 Set ContentExecutionSetupVars.MaxNumberOfTestRuns = IAContentSetup.MaxNumberOfTestRuns;
+			 Set ContentExecutionSetupVars.RequiredNumberOfPasses = IAContentSetup.RequiredNumberOfPasses;
+			 Set ContentExecutionSetupVars.MaxAllowedFailures = IAContentSetup.MaxAllowedFailures;
+			 Set ContentExecutionSetupVars.MaxAllowedConsecutiveFailures = IAContentSetup.MaxAllowedConsecutiveFailures;
+			 Set PostActionsSetupVars.PostFail = IAContentSetup.PostFail;
+			 Set PostActionsSetupVars.PostPass = IAContentSetup.PostPass;
+			 Set ContentExecutionSetupVars.VvarRegex = IAContentSetup.VvarRegex;
+			
+			# Setting up Shmoo CGEM Axes
+			
+			Set ShmooParam.IsPostScrubEnabled = True;
+			Set ShmooExperimentSetup.ShmooExperimentName = IAPostScrubSetup.PostScrubExperimentName;
+			Set ShmooExperimentSetup.ShmooExperimentName = IAPostScrubSetup.PostScrubDomainName;
+
+			# Setting up Axis Name Lit of Values to run
+			Set AVXModeVars.AxisName = IASSFSetup.AVXModeAxisName;
+			Set AVXModeVars.ListOfValues = IASSFSetup.AVXModeValues;
+			
+			Set FrequencyVars.AxisName = IASSFSetup.FrequencyAxisName;
+			Set FrequencyVars.ListOfValues = IASSFSetup.FrequencyValues;
+
+			Set TemperatureVars.AxisName = IASSFSetup.TemperatureAxisName;
+			Set TemperatureVars.ListOfValues = IASSFSetup.TemperatureValues;
+
+			Set VoltageVars.AxisName = IASSFSetup.VoltageAxisName;
+
+			Set ShmooAxesSetupVars.IACoreShmooAxes = IASSFSetup.IAShmooAxes;
+
+			# Setting up Post Scrub offset here if needed
+			#Set IAPostScrubSetup.MinOffsetPostScrub = -0.03,
+			#Set IAPostScrubSetup.MaxOffsetPostScrub = 0.03;
+
+			Set ShmooParam.ShmooLimiterDestination = nameof(ShmooParam.PostScrubLimiters);
+			
+			GoTo RunPostScrub; }
+	}
+
+	FlowItem RunPostScrub ShmooCGEM::Shmoo
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0  { Property PassFail = "Fail"; Return  0; }
+		Result 1  { Property PassFail = "Pass"; Return  1; }
+	}
+
+}
+
+
+
+
+
+
+

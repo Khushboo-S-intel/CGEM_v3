@@ -1,0 +1,44 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan MCEModule;
+
+#TODO add Import statements
+Test PythonCommand IsPlatformPoweredUp
+{
+	Command = "TargetPowerControl.is_target_power_on('Env1')";
+	Timeout = "00:01:00";
+}
+
+Test PythonCommand CollectMCE
+{
+	Command = EnvConditionsPythonCommand.MCE_Check;
+	Timeout = "00:15:00";
+}
+
+Flow CollectMCEFlow
+{
+
+	FlowItem IsPlatformPoweredUp IsPlatformPoweredUp
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;}
+		Result -1 { Property PassFail = "Fail"; Return -1;}
+		Result 0  { Property PassFail = "Fail"; Return  0;}
+		Result 1  { Property PassFail = "Pass"; Return  1;}
+		Result 2 
+		{
+			 Property PassFail = "Pass";
+			 SmartExitPort => ($Result.ExitPort == 1) && ($Result.PythonResult == "True");
+			 GoTo GetMCE;
+		}
+	}
+
+	FlowItem GetMCE CollectMCE
+	{
+		Result -2 { Property PassFail = "Fail";  Return -2;}
+		Result -1 { Property PassFail = "Fail";  Return -1;}
+		Result 0  { Property PassFail = "Fail";  Return 0; }
+		Result 1  { Property PassFail = "Pass";  Return 1; }
+	}
+}

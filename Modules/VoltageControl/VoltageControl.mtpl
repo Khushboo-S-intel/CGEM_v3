@@ -1,0 +1,37 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan VoltageControl;
+
+#TODO add Import statements
+
+#TODO add Tests definitions
+Test PythonCommand Core0_Voltage
+{
+	Command = EnvConditionsPythonCommand.Set_Core0_Voltage;
+	Timeout = "0:01:30";
+}
+Flow Set_Core0_Voltage
+{ 
+	FlowItem Core0_Voltage Core0_Voltage
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+
+}
+Flow VoltageControl
+{
+
+FlowItem Set_Core0_Voltage Set_Core0_Voltage
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0}
+		Result 1 { Property PassFail = "Pass"; Return 1}
+	}
+
+}

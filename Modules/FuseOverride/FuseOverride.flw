@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="FuseOverrideuseOverride::FuseOverride.ShouldSetCoreRatio" X="25" Y="25" />
+  <FlowItem name="FuseOverrideuseOverride::FuseOverride.SetCoreRatio" X="35" Y="45" />
+  <FlowItem name="FuseOverrideuseOverride::FuseOverride.VerifySetCoreRatio" X="45" Y="65" />
+  <FlowItem name="FuseOverride::VerifyCoreRatioFlow.ShouldVerifyCoreRatio" X="25" Y="25" />
+  <FlowItem name="FuseOverride::VerifyCoreRatioFlow.VerifyCoreRatio" X="25" Y="25" />
+</HDMTFlowItemCoor>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.PreFlightFlow" X="25" Y="25" />
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.PrepareSetupForSSF" X="35" Y="45" />
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.RunSSF_ShmooIACore" X="45" Y="65" />
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.PrepareForSearch" X="55" Y="85" />
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.RunSearch_IACore" X="65" Y="105" />
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.PreparePostScrub" X="75" Y="125" />
+  <FlowItem name="IACore_Search_512_800::Full_Search_IACore_Domain.RunPostScrub" X="85" Y="145" />
+</HDMTFlowItemCoor>

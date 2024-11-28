@@ -1,0 +1,128 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan FailureRecovery;
+
+Test DecisionNode DecisionNode
+{
+	DefaultDecisionExitPort = 1;
+	Timeout = "0:00:30";
+}
+
+
+### add boot failure recovery max boot retries (ex: 3)
+
+## can be optimized, at the current design - we can expect that after Shmoo complete an iteration, it will changed the Axes values to their next possible value. 
+
+Flow FullRecoveryFlow
+{
+	FlowItem PowerOffTarget PowerOffStage::PowerOffPlatform
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1;  }
+		Result  0 { Property PassFail = "Fail"; Return  0;  }
+		Result  1 { Property PassFail = "Pass"; GoTo BootFromPowerOffToEfi;  }
+	}
+	#FlowItem Boot_PowerOffStageToEfiStage BootStageTransitions::Boot_PowerOffStageToEfiStage
+	#{
+	#	Result -2 { Property PassFail = "Fail"; Return -2; }
+	#	Result -1 { Property PassFail = "Fail"; Return -1; }
+	#	Result  0 { Property PassFail = "Fail"; Return  0; }
+	#	Result  1 { Property PassFail = "Pass"; GoTo ReadProductConfigs; }
+	#}
+
+	# running boot flow with boot retries - in case of boot failure
+
+	FlowItem BootFromPowerOffToEfi BootStageTransitions::BootFlow_WithRetries
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0 { Property PassFail = "Fail"; Return 0; }
+		Result 1 { Property PassFail = "Pass"; 
+		GoTo ReadProductConfigs; }
+	}
+
+	FlowItem ReadProductConfigs EfiStage::ReadProductConfigs
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo SetAVXModeFlow; }
+	}
+	FlowItem SetAVXModeFlow AvxMode::SetAVXModeFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1;  }
+		Result  0 { Property PassFail = "Fail"; Return 0;  }
+		Result  1 { Property PassFail = "Pass"; GoTo SetCoreRatioFlow;  }
+	}
+	FlowItem SetCoreRatioFlow SearchRatioFlow::SetCoreRatioFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1;  }
+		Result  0 { Property PassFail = "Fail"; Return 0;  }
+		Result  1 { Property PassFail = "Pass"; GoTo TemperatureFlow;  }
+	}
+	FlowItem TemperatureFlow Temperature::TemperatureFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1;  }
+		Result  0 { Property PassFail = "Fail"; Return 0;  }
+		Result  1 { Property PassFail = "Pass"; GoTo SetVparallelPcodeCoreVoltage;  }
+	}
+	
+	FlowItem SetVparallelPcodeCoreVoltage CoreVoltage::SetCoreVoltageAllFivrFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2;  }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0;  }
+		Result  1 {
+			#Set RecoveryFlag.InRecovery = false; 
+			Property PassFail = "Pass";
+			Return 1; 
+		}
+	}
+}
+
+
+
+
+Flow PostPassFailActionsFlow 
+{
+	#-- Ruun platform recovery when content Fail
+	FlowItem ContentFailuresDecisionNode DecisionNode
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { 
+		#-- content pass and not needed to reboot before next content run (same voltage point)
+			SmartExitPort => ContentUsrv.LastContentResult == "Pass"; 
+			Property PassFail = "Pass"; 
+			#Set DecisionNode.IsRebootRequired = False;
+			Return 1 ; }
+		Result  3 { 
+			Property PassFail = "Pass"; 
+			SmartExitPort => ContentUsrv.LastContentResult == "Timeout"; 
+			#Set DecisionNode.IsRebootRequired = True;
+			GoTo FullRecoveryFlow; }
+		#-- content fail, run MCE and need to reboot before next content run
+		Result  2 { 
+			Property PassFail = "Pass"; 
+			SmartExitPort => ContentUsrv.LastContentResult == "Fail"; 
+			#Set DecisionNode.IsRebootRequired = True;
+			GoTo FullRecoveryFlow; }
+	}
+
+	FlowItem FullRecoveryFlow FullRecoveryFlow
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 {
+			Property PassFail = "Pass"; 
+			Set DecisionNode.RebootAndReapplySetup = True;
+			Return  1; }
+	}
+}

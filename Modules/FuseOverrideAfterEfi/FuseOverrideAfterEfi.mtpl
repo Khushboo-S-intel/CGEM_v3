@@ -1,0 +1,49 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan FuseOverrideAfterEfi;
+
+#TODO add Import statements
+
+#TODO add Tests definitions
+
+Test PythonCommand Core_Acode_Ratio
+{
+	Command = EnvConditionsPythonCommand.Set_core_acode_ratio_fuse
+	Timeout = "0:01:30";
+}
+
+#TODO add Tests definitions
+Flow Set_Core_Acode_Ratio
+{ 
+	FlowItem Core_Acode_Ratio Core_Acode_Ratio
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+
+}
+
+Flow FuseOverrideAfterEfi
+{
+	
+	FlowItem Set_Core_Acode_Ratio Set_Core_Acode_Ratio
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0
+		{
+			Property PassFail = "Fail";
+			Return 0 ;#USER TODO: define value
+		}
+		Result 1
+		{
+			Property PassFail = "Pass";Return 1#USER TODO: define value
+		}
+	}
+	
+
+}

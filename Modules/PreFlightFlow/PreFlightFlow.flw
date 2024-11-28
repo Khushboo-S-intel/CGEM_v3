@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--File is auto-generated, any manual edits can be overwritten.-->
+<!DOCTYPE HDMTFlowItemCoor []>
+<HDMTFlowItemCoor>
+  <FlowItem name="PreFlightFlow::PreFlightFlow.ConfigureSerialPort" X="25" Y="25" />
+  <FlowItem name="PreFlightFlow::PreFlightFlow.KillOldPython" X="35" Y="45" />
+  <FlowItem name="PreFlightFlow::PreFlightFlow.RestartPythonService" X="45" Y="65" />
+  <FlowItem name="PreFlightFlow::PreFlightFlow.PythonConsoleStartupScript" X="55" Y="85" />
+  <FlowItem name="PreFlightFlow::PreFlightFlow.PythonSetAguila" X="65" Y="105" />
+</HDMTFlowItemCoor>

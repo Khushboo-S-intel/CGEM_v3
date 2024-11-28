@@ -1,0 +1,408 @@
+Version 1.0;
+@ContentType("DragonContent")
+@BinContentType("IA")
+@BinBootStage('EFI_71','EFI_72','EFI_73','EFI_74')
+
+ContentGroup CMV_ARL8B32A_SSF
+{
+    DragonContent "DR28_0Demo_1C0000E1"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Demo-1C0000E1.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_ISA_1C000236"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-ISA-1C000236.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_MEM_1C000237"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-MEM-1C000237.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_MSR_1C000238"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-MSR-1C000238.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_MUC_1C000239"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-MUC-1C000239.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_P23_1C00023A"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-P23-1C00023A.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_RNG_1C00023B"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-RNG-1C00023B.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_TPU_1C00023C"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-TPU-1C00023C.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_TSC_1C00023D"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-TSC-1C00023D.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0Sanity_VMX_1C00023E"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0Sanity-VMX-1C00023E.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0SanityPR_P_1C000240"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0SanityPR-P-1C000240.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DR28_0SanityPR_V_1C00023F"
+    {
+        ObjectFilePath = "ARL8B32A\\DR28-0SanityPR-V-1C00023F.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "R",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Demo_1C1000F4"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Demo-1C1000F4.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_ISA_1C10023B"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-ISA-1C10023B.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_MEM_1C10023C"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-MEM-1C10023C.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_MSR_1C10023D"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-MSR-1C10023D.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_MUC_1C10023E"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-MUC-1C10023E.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_P23_1C10023F"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-P23-1C10023F.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_RNG_1C100240"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-RNG-1C100240.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_TPU_1C100241"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-TPU-1C100241.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_TSC_1C100242"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-TSC-1C100242.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0Sanity_VMX_1C100243"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0Sanity-VMX-1C100243.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0SanityPR_P_1C100244"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0SanityPR-P-1C100244.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_0SanityPR_V_1C100245"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-0SanityPR-V-1C100245.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+    DragonContent "DH28_1Aught_B7AY_1C10000F"
+    {
+        ObjectFilePath = "ARL8B32A\\DH28-1Aught-B7AY-1C10000F.obj";
+        Timeout = "00:00:18";
+        Operations = True;
+        Features = True;
+        Enabled = Operations && Features;
+        AdditionalProperties = {
+            "DVFS" : "FALSE",
+            "Note" : "Regular",
+            "ContentSubcategory" : "H",
+            "Core_Atom" : "TRUE",
+            "Core_Big" : "TRUE",
+            "Core_KL" : "Don't Care"
+        };
+    }
+}

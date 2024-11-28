@@ -1,0 +1,42 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan EFI;
+
+#TODO add Import statements
+
+#TODO add Tests definitions
+
+Test PythonCommand Start_CdieToEfi
+{
+	Command = "BootStageTransitions._from_cdie_fusebreak_to_efi()";
+	Timeout = "00:08:00";
+}
+
+Test MarionetteWaitForOS Wait_BootHaltToEfi
+{
+	### waiting for the system to boot to Efi
+	OsName = "EFI"; #USER TODO: define value #DISCNNECT
+	Timeout = "00:20:00";
+	Transport = MarionetteSerialTransport{ ComPort = 9 ;};
+}
+
+
+Flow EFI 
+{  
+	FlowItem Start_CdieToEfi Start_CdieToEfi
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo Wait_BootHaltToEfi; }
+	}
+	FlowItem Wait_BootHaltToEfi Wait_BootHaltToEfi
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+}

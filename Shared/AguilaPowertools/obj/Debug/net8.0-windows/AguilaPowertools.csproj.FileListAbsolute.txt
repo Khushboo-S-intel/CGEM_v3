@@ -1,0 +1,10 @@
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\bin\Debug\net8.0-windows\AguilaPowertools.deps.json
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\bin\Debug\net8.0-windows\AguilaPowertools.dll
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\bin\Debug\net8.0-windows\AguilaPowertools.pdb
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\AguilaPowertools.GeneratedMSBuildEditorConfig.editorconfig
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\AguilaPowertools.csproj.CoreCompileInputs.cache
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\AguilaPowertools.sourcelink.json
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\AguilaPowertools.dll
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\refint\AguilaPowertools.dll
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\AguilaPowertools.pdb
+C:\CGEM_CMV_TP\Shared\AguilaPowertools\obj\Debug\net8.0-windows\ref\AguilaPowertools.dll

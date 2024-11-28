@@ -1,0 +1,124 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan BootStageTransitions;
+
+Test PythonCommand Start_PowerOffToBootHalt
+{
+	Command = "BootStageTransitions._from_poweroff_to_soc_fusebreak()";
+	Timeout = "00:08:00";
+}
+Test PythonCommand Is_in_bootStage
+{
+	Command = "BootStageTransitions.is_in_boot_stage('SOC_FUSEBREAK')";
+	Timeout = "0:00:30";
+}
+Test PythonCommand Wait_PowerOffToBootHalt
+{
+	Command = "BootStageTransitions.wait_for_transition_to_boot_stage('POWER_OFF_STAGE', 'SOC_FUSEBREAK', '3000000')";
+	Timeout = "00:08:00";
+}
+
+Test PythonCommand Start_SocToCdie
+{
+	Command = "BootStageTransitions._from_soc_fusebreak_to_cdie_fusebreak()";
+	Timeout = "00:08:00";
+}
+Test PythonCommand Is_in_Cdie_break
+{
+	Command = "BootStageTransitions.is_in_boot_stage('CDIE_FUSEBREAK')";
+	Timeout = "0:00:30";
+}
+Test PythonCommand Wait_for_SocToCdie
+{
+	Command = "BootStageTransitions.wait_for_transition_to_boot_stage('SOC_FUSEBREAK','CDIE_FUSEBREAK','3000000')";
+	Timeout = "00:08:00";
+}
+
+
+Flow SocBreak 
+{
+	FlowItem Start_PowerOffToBootHalt Start_PowerOffToBootHalt
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo Is_in_bootStage; }
+	}
+	FlowItem Is_in_bootStage Is_in_bootStage
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo Wait_PowerOffToBootHalt; }
+	}
+	FlowItem Wait_PowerOffToBootHalt Wait_PowerOffToBootHalt
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+}
+
+Flow CdieBreak 
+{
+	FlowItem Start_SocToCdie Start_SocToCdie
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo Is_in_Cdie_break ; }
+	}
+	FlowItem Is_in_Cdie_break Is_in_Cdie_break
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo Wait_for_SocToCdie ; }
+	}
+	FlowItem Wait_for_SocToCdie Wait_for_SocToCdie
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return 1 ; }
+	}
+}
+Flow BootStageTransitions
+{
+
+    FlowItem SocBreak SocBreak
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0
+		{
+			Property PassFail = "Fail";
+			Return 0 ;#USER TODO: define value
+		}
+		Result 1
+		{
+			Property PassFail = "Pass";
+			GoTo CdieBreak;#USER TODO: define value
+		}
+	}
+	FlowItem CdieBreak CdieBreak
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result 0
+		{
+			Property PassFail = "Fail";
+			Return 0 ;#USER TODO: define value
+		}
+		Result 1
+		{
+			Property PassFail = "Pass";
+			Return 1 ;#USER TODO: define value
+		}
+	}
+
+
+}

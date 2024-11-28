@@ -1,0 +1,202 @@
+Version 1.0;
+
+ProgramStyle = Modular;
+
+TestPlan Intec;
+
+
+Test PythonCommand ResetAllSafetyEvents
+{
+	Command = IntecPythonCommandCollection.ResetAllSafetyEvents;
+	Timeout = "0:00:30";
+}
+
+
+Test PythonCommand LoadConfiguration
+{
+	Command = IntecPythonCommandCollection.LoadConfiguration;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand GetEnabledSensors
+{
+	Command = IntecPythonCommandCollection.GetEnabledSensors;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand EnableSensorsAtPowerOff
+{
+	Command =  IntecPythonCommandCollection.EnableSensors_AtPowerOff;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand EnableSensorsAtBootTransition
+{
+	Command =  IntecPythonCommandCollection.EnableSensors_AtBootTransition;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand SetClosedLoopControlAtPowerOff
+{
+	Command = IntecPythonCommandCollection.SetClosedLoopControl_AtPoweOff;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand SetClosedLoopControlAtBootTransitions
+{
+	Command = IntecPythonCommandCollection.SetClosedLoopControl_AtBootTransition;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand GetSetPointTemperature
+{
+	Command = IntecPythonCommandCollection.GetSetPointTemperature;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand GetSensorTemperature
+{
+	Command = IntecPythonCommandCollection.GetSensorTemperature;
+	Timeout = "0:00:30";
+}
+
+Test PythonCommand GetFeedbackTemperature
+{
+	Command = IntecPythonCommandCollection.GetFeedbackTemperature;
+	Timeout = "0:00:30";
+}
+
+
+Test DelayTest ShouldVerifyTemperature
+{
+	Delay =  "0:00:00";
+	Timeout = "0:00:30";
+} 
+
+Test DelayTest DecisionNode
+{
+	Delay = "0:00:00";
+	Timeout = "0:10:00";
+} 
+
+
+Flow SafeTemperatureFlow 
+{
+	FlowItem ResetAllSafetyEvents ResetAllSafetyEvents
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo LoadConfiguration;  }
+	}
+
+		FlowItem LoadConfiguration LoadConfiguration
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo EnableSensorsAtBootTransition;  }
+	}
+
+	FlowItem EnableSensorsAtBootTransition EnableSensorsAtBootTransition
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return 1;  }
+	}
+}
+
+Flow TemperatureFlow 
+{
+	FlowItem ChooseTemperature DecisionNode
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Pass"; Return  0; }
+		Result  1 { 
+			Property PassFail = "Pass"; 
+			SmartExitPort => DecisionNode.RebootAndReapplySetup == True;
+			Return 1;}
+		Result  2 { 
+			Property PassFail = "Pass"; 
+			SmartExitPort => DecisionNode.RebootAndReapplySetup == False;
+			GoTo SetTemperature; }
+	}
+
+	FlowItem GetEnabledSensors GetEnabledSensors
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo SetClosedLoopControlAtBootTransitions;  }
+	}
+
+	FlowItem SetClosedLoopControlAtBootTransitions SetClosedLoopControlAtBootTransitions
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; GoTo GetFeedbackTemperature; }
+	}
+
+	FlowItem GetFeedbackTemperature GetFeedbackTemperature
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Fail"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+	}
+}
+
+Flow BootTemperatureFlow 
+{
+	FlowItem ChooseTemperature DecisionNode
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Pass"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Set ExperimentSetup.TemperatureToSet = ExperimentSetup.BootTemperature; GoTo SetTemperature; }
+	}
+
+	FlowItem SetTemperature SetTemperature
+	{
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  1 
+		{ 
+			Property PassFail = "Pass"; 
+			Return 1;
+		}
+	}
+}
+
+Flow VerifyTemperatureFlow
+{
+	FlowItem ShouldVerifyTemperature ShouldVerifyTemperature
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Pass"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Set ExperimentSetup.TemperatureToSet = TemperatureVars.AxisCurrentValue; GoTo VerifyTemperatureInitial; }
+		Result  2 
+		{
+			SmartExitPort => TemperatureVars.AxisCurrentValue == true; # If Temperature axis was set veify temperature set condition.
+			Set ExperimentSetup.TemperatureToSet = TemperatureVars.AxisCurrentValue;
+			GoTo VerifyTemperatureInitial;
+		}
+	}
+
+	FlowItem VerifyTemperatureInitial VerifyTemperature
+	{
+		Result -2 { Property PassFail = "Fail"; Return -2; }
+		Result -1 { Property PassFail = "Fail"; Return -1; }
+		Result  0 { Property PassFail = "Pass"; Return  0; }
+		Result  1 { Property PassFail = "Pass"; Return  1; }
+		Result  2 {
+			SmartExitPort => ($Result.ExitPort == 1) && ($Result.PythonResult == "Failed");
+			Set TemperatureVars.AxisCurrentValue = false;
+			Set ExperimentSetup.TemperatureToSet = TemperatureVars.AxisCurrentValue;
+			Return -1;
+		}
+	}
+}
