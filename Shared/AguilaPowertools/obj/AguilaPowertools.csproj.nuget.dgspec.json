@@ -1,23 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kumarikh\\Documents\\GitHub\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj": {}
+    "C:\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kumarikh\\Documents\\GitHub\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj": {
+    "C:\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kumarikh\\Documents\\GitHub\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj",
+        "projectUniqueName": "C:\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj",
         "projectName": "AguilaPowertools",
-        "projectPath": "C:\\Users\\kumarikh\\Documents\\GitHub\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj",
-        "packagesPath": "C:\\Users\\kumarikh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kumarikh\\Documents\\GitHub\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\obj\\",
+        "projectPath": "C:\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\AguilaPowertools.csproj",
+        "packagesPath": "C:\\Users\\lab_cmvba.GAR\\.nuget\\packages\\",
+        "outputPath": "C:\\CGEM_CMV_TP\\Shared\\AguilaPowertools\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kumarikh\\Documents\\GitHub\\CGEM_CMV_TP\\NuGet.Config",
-          "C:\\Users\\kumarikh\\Documents\\GitHub\\NuGet.Config",
-          "C:\\Users\\kumarikh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\CGEM_CMV_TP\\NuGet.Config",
+          "C:\\Users\\lab_cmvba.GAR\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0-windows"
@@ -41,12 +39,23 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
-        }
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Intel.Mfg.Aguila.Backend": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Intel.Mfg.Aguila.Backend.Powertools": {
+              "target": "Package",
+              "version": "[2.7.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -63,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

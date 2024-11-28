@@ -5,4 +5,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Intel.Mfg.Aguila.Backend" Version="9.0.0" />
+    <PackageReference Include="Intel.Mfg.Aguila.Backend.Powertools" Version="2.7.0" />
+  </ItemGroup>
 </Project>

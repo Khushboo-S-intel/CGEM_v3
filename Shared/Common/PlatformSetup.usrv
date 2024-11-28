@@ -16,7 +16,7 @@ UserVars SerialPortSetupVars
 ## ---------------------------------------------------- ##
 UserVars TargetBasePaths
 {
-    String Dragon = "FS0:\\ARL8B32A";
+    String Dragon = "FS0:\\EFI\\EFI\\ICXD10C_H\\";
     String Dragon_CLM = "FS5:\\EFI\\EFI\\";
     String Rhel_Linux_Pcie = "//fs3//rhel//OryxPCIe1x1x16w2032b//";
     String Rhel_Nic = "//fs3//rhel//";

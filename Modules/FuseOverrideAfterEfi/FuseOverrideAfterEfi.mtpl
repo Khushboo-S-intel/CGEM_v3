@@ -10,7 +10,7 @@ TestPlan FuseOverrideAfterEfi;
 
 Test PythonCommand Core_Acode_Ratio
 {
-	Command = EnvConditionsPythonCommand.Set_core_acode_ratio_fuse
+	Command = EnvConditionsPythonCommand.Set_core_acode_ratio_fuse;
 	Timeout = "0:01:30";
 }
 
@@ -41,7 +41,7 @@ Flow FuseOverrideAfterEfi
 		}
 		Result 1
 		{
-			Property PassFail = "Pass";Return 1#USER TODO: define value
+			Property PassFail = "Pass";Return 1;#USER TODO: define value
 		}
 	}
 	

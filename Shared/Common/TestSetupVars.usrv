@@ -8,11 +8,11 @@ Version 1.0;
 
 SelectorRuleCollection DomainActionSelectors
 {
-    SelectorRule DomainAction(Core, Atom, Ring, nac, svos, rhel, DEFAULT)
+    SelectorRule DomainAction(Core, Atom, Ring, GT, svos, rhel, DEFAULT)
     {
         Core => CurrentDomainTrack.currentDomain == "Core_Ratio";
         Atom => CurrentDomainTrack.currentDomain == "Atom";
-        ddr => CurrentDomainTrack.currentDomain == "ddr";
+        GT => CurrentDomainTrack.currentDomain == "GT";
         Ring => CurrentDomainTrack.currentDomain == "Ring";
         svos => CurrentDomainTrack.currentDomain == "svos";
         rhel => CurrentDomainTrack.currentDomain == "rhel";
@@ -32,7 +32,7 @@ SelectorRuleCollection EnvironmentalConditionsSelector
     SelectorRule ShouldApplyEC_WIN (NO, YES)
     {
         NO => CurrentOsTrack.currentOs == "Windows";
-        YES
+        YES ;
     }
 }
 

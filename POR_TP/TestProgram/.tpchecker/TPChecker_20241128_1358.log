@@ -1,0 +1,31 @@
+2024-11-28 13:58    [E]    TC0005    1    1    C:\CGEM_CMV_TP\POR_TP\TestProgram\TestProgram.systpproj                                  System.InvalidOperationException: Could not find FlowDefinition BootStageTransitions::BootFlow_WithRetries in the module(s) BootStageTransitions referenced at File: C:\CGEM_CMV_TP\Modules\FailureRecovery\FailureRecovery.mtpl Line: 37 Column: 32.
+   at Intel.Mfg.Aguila.TplParser.TestProgramDefinition.GetDefinition[T](ScopedIdentifier identifier, ModuleDefinition localModule, Func`2 getDefinitions) in /_/Aguila/TplParser/TplParser.Abstractions/TestProgramDefinition.cs:line 304
+   at Intel.Mfg.Aguila.TplParser.TestProgramDefinition.GetFlowDefinition(ScopedIdentifier identifier, ModuleDefinition localModule) in /_/Aguila/TplParser/TplParser.Abstractions/TestProgramDefinition.cs:line 260
+   at Intel.Mfg.Aguila.TplParser.TestProgramDefinition.GetFlowItemReference(ScopedIdentifier identifier, ModuleDefinition localModule) in /_/Aguila/TplParser/TplParser.Abstractions/TestProgramDefinition.cs:line 83
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowItemDefinition.VerifyFlowItemReferenceAsync(TestProgramDefinition testProgramDefinition, ModuleDefinition module, ScopedIdentifier flowItemReference, CancellationToken token) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowItemDefinition.cs:line 38
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowItemDefinition.VerifyAsync(TestProgramDefinition testProgramDefinition, ModuleDefinition moduleDefinition, FlowDefinition flowDefinition, FlowItemDefinition flowItemDefinition, CancellationToken token) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowItemDefinition.cs:line 23
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowsInModuleDefinition.<>c__DisplayClass4_0.<VerifyFlowItemsAsync>b__0(FlowItemDefinition flowItemDefinition) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowsInModuleDefinition.cs:line 35
+   at System.Linq.Enumerable.SelectListIterator`2.MoveNext()
+   at System.Threading.Tasks.Task.WhenAll(IEnumerable`1 tasks)
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowsInModuleDefinition.VerifyFlowItemsAsync(TestProgramDefinition testProgramDefinition, ModuleDefinition moduleDefinition, FlowDefinition flowDefinition, CancellationToken token) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowsInModuleDefinition.cs:line 34
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowsInModuleDefinition.VerifyFlowAsync(TestProgramDefinition testProgramDefinition, ModuleDefinition moduleDefinition, FlowDefinition flowDefinition, CancellationToken token) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowsInModuleDefinition.cs:line 29
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowsInModuleDefinition.<>c__DisplayClass2_0.<VerifyAsync>b__0(FlowDefinition flowDefinition) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowsInModuleDefinition.cs:line 23
+   at System.Linq.Enumerable.SelectEnumerableIterator`2.MoveNext()
+   at System.Threading.Tasks.Task.WhenAll(IEnumerable`1 tasks)
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyFlowsInModuleDefinition.VerifyAsync(TestProgramDefinition testProgramDefinition, ModuleDefinition moduleDefinition, CancellationToken token) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyFlowsInModuleDefinition.cs:line 23
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyModulesInTestProgramDefinition.<>c__DisplayClass2_1.<VerifyAsync>b__1(IVerifyAspectOfModuleDefinition v) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyModulesInTestProgramDefinition.cs:line 25
+   at System.Linq.Enumerable.SelectArrayIterator`2.MoveNext()
+   at System.Linq.Enumerable.SelectManySingleSelectorIterator`2.MoveNext()
+   at System.Threading.Tasks.Task.WhenAll(IEnumerable`1 tasks)
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyModulesInTestProgramDefinition.VerifyAsync(TestProgramDefinition testProgramDefinition, CancellationToken token) in /_/Aguila/TplParser/TplParser/Verifiers/VerifyModulesInTestProgramDefinition.cs:line 22
+   at Intel.Mfg.Aguila.TplParser.Verifiers.VerifyTestProgramDefinition.<>c__DisplayClass2_1.<VerifyAsync>b__1() in /_/Aguila/TplParser/TplParser/Verifiers/VerifyTestProgramDefinition.cs:line 23
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Intel.Mfg.Aguila.TplParser.TestProgramParser.ParseAsync(String rootDirectory, String baseTplFilePath, String stplFilePath, String envFilePath, CancellationToken token) in /_/Aguila/TplParser/TplParser/TestProgramParser.cs:line 83
+   at Intel.Mfg.Aguila.TplSequencer.Console.Shared.TestProgramLoader.LoadTestProgramAsync(LoadTestProgramArgs testProgramArgs, CancellationToken cancellationToken) in /_/Aguila/TplSequencer/TplSequencer.Console/Shared/TestProgramLoader.cs:line 59
+   at Intel.Mfg.Aguila.TplSequencer.Console.VerifyTestProgram.TestProgramVerifier.VerifyTestProgramAsync(VerifyTestProgramOptions options, CancellationToken cancellationToken) in /_/Aguila/TplSequencer/TplSequencer.Console/VerifyTestProgram/TestProgramVerifier.cs:line 35
+

@@ -47,6 +47,8 @@ Project("{6A0D2C6B-575A-428F-9259-B3AF74FC1B9E}") = "TestProgram", "POR_TP\TestP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguilaPowertools", "Shared\AguilaPowertools\AguilaPowertools.csproj", "{2D5220B6-C3EA-4553-998A-3C546AB5D509}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguilaTalonLibrary", "Shared\AguilaTalonLibrary\AguilaTalonLibrary.csproj", "{A043FA2D-BC87-41CE-A816-4A93FD6F4155}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{2D5220B6-C3EA-4553-998A-3C546AB5D509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D5220B6-C3EA-4553-998A-3C546AB5D509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D5220B6-C3EA-4553-998A-3C546AB5D509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A043FA2D-BC87-41CE-A816-4A93FD6F4155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A043FA2D-BC87-41CE-A816-4A93FD6F4155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A043FA2D-BC87-41CE-A816-4A93FD6F4155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A043FA2D-BC87-41CE-A816-4A93FD6F4155}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{1B64C63D-A9A3-486F-B10C-6E830F296B3A} = {B753A49A-2525-4973-AFFA-BE52E4201F42}
 		{E6819678-4CB8-45FB-B8EE-2E016D80B3E4} = {4A5C8FC2-C074-4BA4-9F98-5CE5C51A7EAB}
 		{2D5220B6-C3EA-4553-998A-3C546AB5D509} = {C492E4B4-3644-4171-AAC6-51A8A4F3E404}
+		{A043FA2D-BC87-41CE-A816-4A93FD6F4155} = {C492E4B4-3644-4171-AAC6-51A8A4F3E404}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DC7C8E3-5117-487A-98A9-040FC9029B33}

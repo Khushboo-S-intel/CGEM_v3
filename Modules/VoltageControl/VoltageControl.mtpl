@@ -30,8 +30,8 @@ FlowItem Set_Core0_Voltage Set_Core0_Voltage
 	{
 		Result -2 { Property PassFail = "Fail"; Return -2; }
 		Result -1 { Property PassFail = "Fail"; Return -1; }
-		Result 0 { Property PassFail = "Fail"; Return 0}
-		Result 1 { Property PassFail = "Pass"; Return 1}
+		Result 0 { Property PassFail = "Fail"; Return 0;}
+		Result 1 { Property PassFail = "Pass"; Return 1;}
 	}
 
 }

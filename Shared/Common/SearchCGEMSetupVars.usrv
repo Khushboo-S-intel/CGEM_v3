@@ -30,7 +30,7 @@ UserVars SearchParam
 UserVars SearchAxesSetupVars
 {
 	Array<SearchAxis> IACoreSearchAxes = [
-          SearchAxes.AVXModeAxis,
+          #SearchAxes.AVXModeAxis,
           SearchAxes.FrequencyAxis,
 		  SearchAxes.TemperatureAxis,
 		  SearchAxes.VoltageAxis
